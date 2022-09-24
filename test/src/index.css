@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 *,
 ::before,
 ::after {
@@ -30,4 +32,5 @@ h6 {
 html,
 body {
   height: 100%;
+  font-family: "Roboto", sans-serif;
 }
