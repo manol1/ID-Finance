@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface IStepState {
   step: Step;
 }
+
 const initialState: IStepState = {
   step: Step.One,
 };
@@ -17,5 +18,7 @@ export const stepSlice = createSlice({
     },
   },
 });
+
+export const { stepTwo } = stepSlice.actions;
 
 export default stepSlice.reducer;
