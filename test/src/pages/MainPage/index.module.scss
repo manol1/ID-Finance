@@ -9,3 +9,16 @@
   align-items: center;
   margin-top: 40px;
 }
+
+.form {
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  background-color: aqua;
+  & > * {
+    width: 100%;
+    max-width: 300px;
+  }
+}
