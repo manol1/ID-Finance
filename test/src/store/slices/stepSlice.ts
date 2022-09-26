@@ -13,12 +13,15 @@ export const stepSlice = createSlice({
   name: "step",
   initialState,
   reducers: {
+    stepOne(state) {
+      state.step = Step.One;
+    },
     stepTwo(state) {
       state.step = Step.Two;
     },
   },
 });
 
-export const { stepTwo } = stepSlice.actions;
+export const { stepOne, stepTwo } = stepSlice.actions;
 
 export default stepSlice.reducer;

@@ -6,19 +6,21 @@ import {
   FormLabel,
   RadioGroup,
   FormControlLabel,
-  FormHelperText,
   Radio,
   InputLabel,
   Select,
   MenuItem,
   FormGroup,
   Checkbox,
+  Modal,
+  List,
+  ListItem,
 } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import React, { useState, SyntheticEvent } from "react";
 import { stub } from "./stub";
 import { useAppDispatch, useAppSelector } from "../../hook/redux";
-import { stepTwo } from "../../store/slices/stepSlice";
+import { stepOne, stepTwo } from "../../store/slices/stepSlice";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/material.css";
 
@@ -39,9 +41,9 @@ export function MainPage() {
     repeatPassword: "",
     firstName: "",
     lastName: "",
-    sexRadioButtons: "female",
+    sex: "female",
     birthday: "",
-    favoriteOcean: "",
+    favoriteOcean: stub.ocean.oneOf[0],
     Sport: false,
     Beauty: false,
     IT: false,
@@ -82,7 +84,10 @@ export function MainPage() {
     !validEmail &&
     !validPassword &&
     !validRepeatPassword &&
-    formValues.email.length;
+    formValues.email.length &&
+    formValues.phone.length &&
+    formValues.password.length &&
+    formValues.repeatPassword.length;
 
   const validateSignUpInfo = () => {
     validatePhone();
@@ -102,7 +107,6 @@ export function MainPage() {
     const name = (event.target as HTMLInputElement | HTMLSelectElement).name;
     const value = (event.target as HTMLInputElement | HTMLSelectElement).value;
     setFormValues({ ...formValues, [name]: value });
-    console.log(formValues);
   };
 
   const [validFirstName, setValidFirstName] = useState(false);
@@ -138,8 +142,52 @@ export function MainPage() {
     const name = (event.target as HTMLInputElement).name;
     const value = (event.target as HTMLInputElement).checked;
     setFormValues({ ...formValues, [name]: value });
-    console.log(formValues);
   };
+
+  const goToSignUpInfo = () => {
+    setFormValues({ ...formValues, password: "", repeatPassword: "" });
+    dispatch(stepOne());
+  };
+
+  const [isModal, setIsModal] = useState(false);
+  const openModal = () => setIsModal(true);
+  const closeModal = () => setIsModal(false);
+
+  const isValidPersonalInfo =
+    !validFirstName &&
+    !validLastName &&
+    !validBirthday &&
+    !validRepeatPassword &&
+    formValues.firstName.length &&
+    formValues.lastName.length &&
+    formValues.birthday.length;
+
+  const validatePersonalInfo = () => {
+    validateFirstName();
+    validateLastName();
+    validateBirthday();
+    if (isValidPersonalInfo) {
+      openModal();
+    }
+  };
+
+  const {
+    phone,
+    email,
+    firstName,
+    lastName,
+    birthday,
+    favoriteOcean,
+    sex,
+    Sport,
+    Beauty,
+    IT,
+    Pets,
+  } = formValues;
+
+  const hobbyList = `${Sport ? "Sport, " : ""}${Beauty ? "Beauty, " : ""}${
+    IT ? "IT, " : ""
+  }${Pets ? "Pets" : ""}`;
 
   return (
     <main className={styles.container}>
@@ -148,7 +196,7 @@ export function MainPage() {
           <PhoneInput
             country={"by"}
             onlyCountries={["by"]}
-            value={formValues.phone}
+            value={phone}
             onChange={phoneChangeHandler}
             isValid={!validPhone}
             onBlur={validatePhone}
@@ -163,6 +211,7 @@ export function MainPage() {
             error={validEmail}
             onBlur={validateEmail}
             margin="normal"
+            value={email}
             onChange={changeHandler}
           />
           <TextField
@@ -189,7 +238,11 @@ export function MainPage() {
             margin="normal"
             onChange={changeHandler}
           />
-          <Button variant="contained" onClick={validateSignUpInfo}>
+          <Button
+            variant="contained"
+            onClick={validateSignUpInfo}
+            sx={{ bgcolor: "#20232a" }}
+          >
             Next
           </Button>
         </form>
@@ -205,6 +258,7 @@ export function MainPage() {
             error={validFirstName}
             onBlur={validateFirstName}
             margin="normal"
+            value={firstName}
             onChange={changeHandler}
             helperText={`enter ${stub.firstName.minLength} to ${stub.firstName.maxLength} characters`}
           />
@@ -217,6 +271,7 @@ export function MainPage() {
             error={validLastName}
             onBlur={validateLastName}
             margin="normal"
+            value={lastName}
             onChange={changeHandler}
             helperText={`enter ${stub.lastName.minLength} to ${stub.lastName.maxLength} characters`}
           />
@@ -225,7 +280,8 @@ export function MainPage() {
             <RadioGroup
               aria-labelledby="sex-radio-buttons"
               defaultValue="female"
-              name="sexRadioButtons"
+              name="sex"
+              value={sex}
               onChange={changeHandler}
             >
               <FormControlLabel
@@ -244,6 +300,7 @@ export function MainPage() {
             error={validBirthday}
             onBlur={validateBirthday}
             margin="normal"
+            value={birthday}
             onChange={changeHandler}
             helperText="Enter your birthday"
           />
@@ -253,7 +310,7 @@ export function MainPage() {
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
-              defaultValue={stub.ocean.oneOf[0]}
+              value={favoriteOcean}
               onChange={changeHandler}
               name="favoriteOcean"
               required={stub.ocean.required}
@@ -267,19 +324,74 @@ export function MainPage() {
           </FormControl>
           <FormGroup>
             <FormLabel component="legend">Hobby</FormLabel>
-            {stub.hobby.anyOf.map((hobby) => (
-              <FormControlLabel
-                control={<Checkbox />}
-                label={hobby}
-                name={hobby}
-                key={hobby}
-                onChange={hobbyChangeHandler}
-              />
-            ))}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name={"Sport"}
+                  onChange={hobbyChangeHandler}
+                  checked={formValues.Sport}
+                />
+              }
+              label={"Sport"}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name={"Beauty"}
+                  onChange={hobbyChangeHandler}
+                  checked={formValues.Beauty}
+                />
+              }
+              label={"Beauty"}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name={"IT"}
+                  onChange={hobbyChangeHandler}
+                  checked={formValues.IT}
+                />
+              }
+              label={"IT"}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name={"Pets"}
+                  onChange={hobbyChangeHandler}
+                  checked={formValues.Pets}
+                />
+              }
+              label={"Pets"}
+            />
           </FormGroup>
-          <Button variant="contained">Change SignUp Information</Button>
+          <Button
+            variant="contained"
+            onClick={goToSignUpInfo}
+            sx={{ mb: 2, bgcolor: "#20232a" }}
+          >
+            Change SignUp Information
+          </Button>
+          <Button
+            variant="contained"
+            onClick={validatePersonalInfo}
+            sx={{ bgcolor: "#20232a" }}
+          >
+            Complete
+          </Button>
         </form>
       )}
+      <Modal open={isModal} onClose={closeModal}>
+        <List className={styles.modal}>
+          <ListItem>Phone: {phone}</ListItem>
+          <ListItem>Email: {email}</ListItem>
+          <ListItem>Sex: {sex}</ListItem>
+          <ListItem>First Name: {firstName}</ListItem>
+          <ListItem>Last Name: {lastName}</ListItem>
+          <ListItem>Your Favorite Ocean: {favoriteOcean}</ListItem>
+          <ListItem>Hobby: {hobbyList}</ListItem>
+        </List>
+      </Modal>
     </main>
   );
 }
