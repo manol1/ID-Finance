@@ -1,0 +1,28 @@
+.footer {
+  min-height: 100px;
+  background-color: #20232a;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  // padding: 0 15px;
+  // box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title > a {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 1.5rem;
+  @media (max-width: 400px) {
+    font-size: 1.2rem;
+  }
+}
