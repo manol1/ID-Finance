@@ -1,8 +1,15 @@
 .logo {
   position: absolute;
   left: 20px;
+  @media (max-width: 400px) {
+    left: 10px;
+  }
   svg {
     height: 48px;
     width: 48px;
+    @media (max-width: 400px) {
+      height: 36px;
+      width: 36px;
+    }
   }
 }
