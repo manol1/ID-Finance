@@ -1,0 +1,37 @@
+.container {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1230px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  & > * {
+    width: 100%;
+    max-width: 300px;
+    @media (max-width: 340px) {
+      max-width: 280px;
+    }
+  }
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
