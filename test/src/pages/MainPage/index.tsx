@@ -200,6 +200,7 @@ export function MainPage() {
             onChange={phoneChangeHandler}
             isValid={!validPhone}
             onBlur={validatePhone}
+            inputClass={styles.phoneInput}
           />
           <TextField
             name="email"
