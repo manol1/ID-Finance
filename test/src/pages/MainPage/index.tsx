@@ -241,7 +241,7 @@ export function MainPage() {
           <Button
             variant="contained"
             onClick={validateSignUpInfo}
-            sx={{ bgcolor: "#20232a" }}
+            sx={{ bgcolor: "#20232a", mt: 2 }}
           >
             Next
           </Button>
@@ -302,7 +302,7 @@ export function MainPage() {
             margin="normal"
             value={birthday}
             onChange={changeHandler}
-            helperText="Enter your birthday"
+            helperText={`Enter your birthday. Age: ${stub.birthday.minAge} - ${stub.birthday.maxAge}`}
           />
           <FormControl fullWidth margin="normal">
             <InputLabel id="demo-simple-select-label" variant="filled">
@@ -368,7 +368,7 @@ export function MainPage() {
           <Button
             variant="contained"
             onClick={goToSignUpInfo}
-            sx={{ mb: 2, bgcolor: "#20232a" }}
+            sx={{ mb: 2, mt: 2, bgcolor: "#20232a" }}
           >
             Change SignUp Information
           </Button>

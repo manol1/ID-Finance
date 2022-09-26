@@ -6,7 +6,11 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <DollarSvg />
-        <div className={styles.title}>Footer</div>
+        <div className={styles.title}>
+          <a href="https://github.com/manol1/ID-Finance/" target="_blank">
+            GitHub
+          </a>
+        </div>
       </div>
     </footer>
   );
