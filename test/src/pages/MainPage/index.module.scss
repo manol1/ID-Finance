@@ -11,7 +11,8 @@
 }
 
 .form {
-  min-width: 600px;
+  width: inherit;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,4 +35,10 @@
   flex-direction: column;
   transform: translate(-50%, -50%);
   background-color: #fff;
+}
+
+.phoneInput {
+  @media (max-width: 340px) {
+    max-width: 280px;
+  }
 }
